@@ -31,4 +31,8 @@ public class CozinhaService {
         repository.deleteById(id);
     }
 
+    public boolean cozinhaExiste(Long idCozinha) {
+        return repository.existsById(idCozinha);
+    }
+
 }
