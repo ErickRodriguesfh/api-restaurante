@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,18 @@ public class RestauranteController {
     }
 
     @GetMapping("/{id}")
-    public Restaurante findById(@PathVariable Long id) {
+    public Restaurante buscarPorId(@PathVariable Long id) {
         return service.findById(id);
+    }
+
+    @GetMapping("/por-taxa-frete")
+    public List<Restaurante> consultarPorTaxaDeFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
+        return service.consultarPorTaxaDeFrete(taxaInicial, taxaFinal);
+    }
+
+    @GetMapping("/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+        return service.restaurantesComFreteGratis(nome);
     }
 
     @PostMapping

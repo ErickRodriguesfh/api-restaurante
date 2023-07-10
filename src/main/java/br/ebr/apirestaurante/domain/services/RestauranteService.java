@@ -3,8 +3,11 @@ package br.ebr.apirestaurante.domain.services;
 import br.ebr.apirestaurante.domain.exception.EntidadeNaoEncontradaException;
 import br.ebr.apirestaurante.domain.model.Restaurante;
 import br.ebr.apirestaurante.domain.repositories.RestauranteRepository;
+import br.ebr.apirestaurante.domain.repositories.specification.RestauranteComFreteGratisSpec;
+import br.ebr.apirestaurante.domain.repositories.specification.RestauranteComNomeSemelhanteSpec;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -37,6 +40,17 @@ public class RestauranteService {
         }
 
         return repository.save(restaurante);
+    }
+
+    public List<Restaurante> consultarPorTaxaDeFrete(BigDecimal taxaInicial, BigDecimal taxaFinal) {
+        return repository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
+    }
+
+    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+        var comFreteGratis = new RestauranteComFreteGratisSpec();
+        var comNomeSemelhante = new RestauranteComNomeSemelhanteSpec(nome);
+
+        return repository.findAll(comFreteGratis.and(comNomeSemelhante));
     }
 
 }

@@ -35,4 +35,8 @@ public class CozinhaService {
         return repository.existsById(idCozinha);
     }
 
+    public List<Cozinha> consultarPorNome(String nome) {
+        return repository.findByNomeContaining(nome);
+    }
+
 }
