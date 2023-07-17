@@ -30,5 +30,4 @@ public class FormaPagamento {
         this.descricao = descricao;
     }
 
-
 }

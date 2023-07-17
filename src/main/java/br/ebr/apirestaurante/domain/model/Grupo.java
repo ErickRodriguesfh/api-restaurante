@@ -1,25 +1,31 @@
 package br.ebr.apirestaurante.domain.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
+import java.util.List;
 
 @Entity
-public class Cidade {
+public class Grupo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "estado_id")
-    private Estado estado;
+    @ManyToMany
+    @JoinTable(name = "grupo_permissao",
+            joinColumns = @JoinColumn(name = "grupo_id"),
+            inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    private List<Permissao> permissoes;
+
+    public Grupo() {
+    }
 
     public Long getId() {
         return id;
@@ -37,12 +43,12 @@ public class Cidade {
         this.nome = nome;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public List<Permissao> getPermissoes() {
+        return permissoes;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setPermissoes(List<Permissao> permissao) {
+        this.permissoes = permissao;
     }
 
 }

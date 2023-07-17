@@ -1,15 +1,14 @@
 package br.ebr.apirestaurante.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Restaurante {
@@ -26,6 +25,26 @@ public class Restaurante {
     @ManyToOne
     @JoinColumn(name = "fk_cozinha")
     private Cozinha cozinha;
+
+    @Embedded
+    @JsonIgnore
+    private Endereco endereco;
+
+    @OneToMany(mappedBy = "restaurante")
+    private List<Produto> produto;
+
+    @CreationTimestamp
+    private LocalDateTime dataCadastro;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "restaurante_forma_pagamento",
+            joinColumns = @JoinColumn(name = "restaurante_id"),
+            inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
+    private List<FormaPagamento> formaPagamentos = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -59,22 +78,36 @@ public class Restaurante {
         this.cozinha = cozinha;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Restaurante that = (Restaurante) o;
-        return Objects.equals(id, that.id) && Objects.equals(nome, that.nome) &&
-                Objects.equals(taxaFrete, that.taxaFrete);
+    public List<FormaPagamento> getFormaPagamentos() {
+        return formaPagamentos;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nome, taxaFrete);
+    public void setFormaPagamentos(List<FormaPagamento> formaPagamentos) {
+        this.formaPagamentos = formaPagamentos;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 
 }
