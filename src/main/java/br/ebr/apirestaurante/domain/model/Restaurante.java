@@ -26,7 +26,7 @@ public class Restaurante {
     @JsonIgnore
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_cozinha")
+    @JoinColumn(name = "cozinha_id")
     private Cozinha cozinha;
 
     @Embedded
@@ -34,6 +34,7 @@ public class Restaurante {
     private Endereco endereco;
 
     @OneToMany(mappedBy = "restaurante")
+    @JsonIgnore
     private List<Produto> produto;
 
     @CreationTimestamp

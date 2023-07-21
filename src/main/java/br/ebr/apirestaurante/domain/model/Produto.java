@@ -21,7 +21,7 @@ public class Produto {
     private boolean ativo;
 
     @ManyToOne
-    @JoinColumn(name = "fk_restaurante")
+    @JoinColumn(name = "restaurante_id")
     private Restaurante restaurante;
 
     public Produto() {

@@ -7,9 +7,7 @@ import br.ebr.apirestaurante.domain.repositories.specification.RestauranteSpecs;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RestauranteService {
