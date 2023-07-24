@@ -1,11 +1,6 @@
 package br.ebr.apirestaurante.domain.exception;
 
-import java.io.Serial;
-
-public class EntidadeNaoEncontradaException extends RuntimeException{
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class EntidadeNaoEncontradaException extends BaseException {
 
     public EntidadeNaoEncontradaException(String mensagem) {
         super(mensagem);

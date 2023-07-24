@@ -49,12 +49,14 @@ public class RestauranteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Restaurante adicionar(@RequestBody Restaurante restaurante) {
+        System.out.println(restaurante.getCozinha().getId());
         return service.salvar(restaurante);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public Restaurante atualizar(@RequestBody Restaurante restaurante) {
+        System.out.println(restaurante.getCozinha());
         return service.salvar(restaurante);
     }
 

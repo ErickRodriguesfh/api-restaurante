@@ -1,5 +1,6 @@
 package br.ebr.apirestaurante.domain.services;
 
+import br.ebr.apirestaurante.domain.exception.EntidadeNaoEncontradaException;
 import br.ebr.apirestaurante.domain.model.Cozinha;
 import br.ebr.apirestaurante.domain.repositories.CozinhaRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class CozinhaService {
     }
 
     public Cozinha buscarPorId(Long id) {
-        return repository.findById(id).get();
+        return repository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Cozinha não encontrada com o id: " +id));
     }
 
     public void adicionarOuAtualizar(Cozinha cozinha) {
