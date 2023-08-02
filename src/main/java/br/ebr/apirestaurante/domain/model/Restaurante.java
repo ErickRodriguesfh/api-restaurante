@@ -1,7 +1,6 @@
 package br.ebr.apirestaurante.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import br.ebr.apirestaurante.validation.TaxaFrete;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +25,7 @@ public class Restaurante {
 
     private String nome;
 
+    @TaxaFrete
     @Column(name = "taxa_frete")
     private BigDecimal taxaFrete;
 
@@ -34,11 +34,9 @@ public class Restaurante {
     private Cozinha cozinha;
 
     @Embedded
-    @JsonIgnore
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "restaurante")
-    @JsonIgnore
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.REMOVE)
     private List<Produto> produto;
 
     @CreationTimestamp
@@ -47,7 +45,6 @@ public class Restaurante {
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),

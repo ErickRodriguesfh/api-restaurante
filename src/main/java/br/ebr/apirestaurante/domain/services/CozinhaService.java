@@ -3,18 +3,16 @@ package br.ebr.apirestaurante.domain.services;
 import br.ebr.apirestaurante.domain.exception.EntidadeNaoEncontradaException;
 import br.ebr.apirestaurante.domain.model.Cozinha;
 import br.ebr.apirestaurante.domain.repositories.CozinhaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CozinhaService {
 
     private final CozinhaRepository repository;
-
-    public CozinhaService(CozinhaRepository repository) {
-        this.repository = repository;
-    }
 
     public List<Cozinha> listar() {
         return repository.findAll();
