@@ -4,6 +4,7 @@ import br.ebr.apirestaurante.domain.exception.EntidadeNaoEncontradaException;
 import br.ebr.apirestaurante.domain.model.Restaurante;
 import br.ebr.apirestaurante.domain.repositories.RestauranteRepository;
 import br.ebr.apirestaurante.domain.repositories.specification.RestauranteSpecs;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,23 @@ public class RestauranteService {
         }
 
         repository.deleteById(id);
+    }
+
+    @Transactional
+    public void ativar(Long id) {
+        final var restauranteAtual = buscarOuFalhar(id);
+        restauranteAtual.ativar();
+    }
+
+    @Transactional
+    public void inativar(Long id) {
+        final var restauranteAtual = buscarOuFalhar(id);
+        restauranteAtual.inativar();
+    }
+
+    public Restaurante buscarOuFalhar(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Restaurante não encontrado com o id " +id));
     }
 
 }

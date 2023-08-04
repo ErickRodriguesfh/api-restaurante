@@ -46,6 +46,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e, problem, new HttpHeaders(), status, request);
     }
 
+    @ExceptionHandler(NegocioException.class)
+    public ResponseEntity<?> handleEntidadeNaoEncontradaException(NegocioException e, WebRequest request
+    ) {
+        final var status = HttpStatus.BAD_REQUEST;
+        final var problemType = ProblemType.REGRA_NEGOCIO;
+        final var detail = e.getMessage();
+        final var problem = createProblemBuilder(status, problemType, detail)
+                .build();
+
+        return handleExceptionInternal(e, problem, new HttpHeaders(), status, request);
+    }
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(
             HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request

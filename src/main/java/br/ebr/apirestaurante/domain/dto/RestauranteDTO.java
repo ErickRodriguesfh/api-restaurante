@@ -35,8 +35,9 @@ public class RestauranteDTO {
     @NotNull
     private Cozinha cozinha;
 
-    @JsonIgnore
     private Endereco endereco;
+
+    private Boolean ativo;
 
     @JsonIgnore
     private List<Produto> produto;

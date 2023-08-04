@@ -81,4 +81,16 @@ public class RestauranteController {
         service.excluirRestaurante(id);
     }
 
+    @PutMapping("/{id}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarRestaurante(@PathVariable Long id) {
+        service.ativar(id);
+    }
+
+    @DeleteMapping("/{id}/ativo")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void inativarRestaurante(@PathVariable Long id) {
+        service.inativar(id);
+    }
+
 }
