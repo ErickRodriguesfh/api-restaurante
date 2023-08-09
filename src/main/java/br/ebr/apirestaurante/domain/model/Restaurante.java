@@ -11,7 +11,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,7 +41,7 @@ public class Restaurante {
     private Boolean ativo = Boolean.TRUE;
 
     @OneToMany(mappedBy = "restaurante", cascade = CascadeType.REMOVE)
-    private List<Produto> produto;
+    private Set<Produto> produto;
 
     @CreationTimestamp
     private LocalDateTime dataCadastro;
@@ -51,7 +53,7 @@ public class Restaurante {
     @JoinTable(name = "restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-    private List<FormaPagamento> formaPagamentos = new ArrayList<>();
+    private Set<FormaPagamento> formaPagamentos = new HashSet<>();
 
     public void ativar() {
         setAtivo(true);
@@ -67,6 +69,10 @@ public class Restaurante {
 
     public boolean associarFormaPagamento(FormaPagamento formaPagamento) {
         return getFormaPagamentos().add(formaPagamento);
+    }
+
+    public boolean adicionarProduto(Produto produto) {
+        return this.produto.add(produto);
     }
 
 }
