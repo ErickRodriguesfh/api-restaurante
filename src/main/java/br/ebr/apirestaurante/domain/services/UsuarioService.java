@@ -6,6 +6,7 @@ import br.ebr.apirestaurante.domain.exception.EntidadeNaoEncontradaException;
 import br.ebr.apirestaurante.domain.exception.NegocioException;
 import br.ebr.apirestaurante.domain.model.Usuario;
 import br.ebr.apirestaurante.domain.repositories.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.Objects;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final GrupoService grupoService;
 
     public List<Usuario> listar() {
         return repository.findAll();
@@ -48,6 +50,13 @@ public class UsuarioService {
 
         usuarioSalvo.setSenha(usuarioSenhaDTO.getNovaSenha());
         repository.save(usuarioSalvo);
+    }
+
+    @Transactional
+    public void associarGrupoAoUsuario(Long idUsuario, Long idGrupo) {
+        final var usuario = buscarOuFalhar(idUsuario);
+        final var grupo = grupoService.buscarOuFalhar(idGrupo);
+        usuario.adicionarGrupo(grupo);
     }
 
     public Usuario buscarOuFalhar(Long id) {

@@ -60,4 +60,10 @@ public class UsuarioController {
         service.alterarSenha(usuario, id);
     }
 
+    @PutMapping("/{idUsuario}/grupos/{idGrupo}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void associarUsuarioAGrupo(@PathVariable Long idUsuario, @PathVariable Long idGrupo) {
+        service.associarGrupoAoUsuario(idUsuario, idGrupo);
+    }
+
 }
