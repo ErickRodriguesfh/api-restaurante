@@ -1,6 +1,7 @@
 package br.ebr.apirestaurante.controller;
 
 import br.ebr.apirestaurante.domain.dto.RestauranteDTO;
+import br.ebr.apirestaurante.domain.dto.UsuarioReponsavelDTO;
 import br.ebr.apirestaurante.domain.model.Restaurante;
 import br.ebr.apirestaurante.domain.services.RestauranteService;
 import jakarta.validation.Valid;

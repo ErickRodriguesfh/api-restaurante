@@ -1,5 +1,7 @@
 package br.ebr.apirestaurante.domain.services;
 
+import br.ebr.apirestaurante.domain.dto.UsuarioReponsavelDTO;
+import br.ebr.apirestaurante.domain.dto.UsuarioResponseDTO;
 import br.ebr.apirestaurante.domain.exception.EntidadeNaoEncontradaException;
 import br.ebr.apirestaurante.domain.model.Restaurante;
 import br.ebr.apirestaurante.domain.repositories.RestauranteRepository;
@@ -60,6 +62,19 @@ public class RestauranteService {
         }
 
         repository.deleteById(id);
+    }
+
+    public UsuarioReponsavelDTO buscarUsuarioResponsavel(Long idRestaurante) {
+        final var usuarios = buscarOuFalhar(idRestaurante).getUsuarios();
+        final var usuarioResponsavel = new UsuarioReponsavelDTO();
+
+        usuarios.forEach(usuario -> {
+            usuarioResponsavel.setEmail(usuario.getEmail());
+            usuarioResponsavel.setId(usuario.getId());
+            usuarioResponsavel.setNome(usuario.getNome());
+        });
+
+        return usuarioResponsavel;
     }
 
     @Transactional
