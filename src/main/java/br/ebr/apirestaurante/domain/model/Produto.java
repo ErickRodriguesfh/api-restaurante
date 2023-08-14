@@ -1,5 +1,6 @@
 package br.ebr.apirestaurante.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +32,7 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "restaurante_id")
+    @JsonIgnore
     private Restaurante restaurante;
 
 }
