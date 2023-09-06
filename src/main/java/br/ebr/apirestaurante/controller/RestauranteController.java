@@ -8,17 +8,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,6 +87,24 @@ public class RestauranteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void inativarRestaurante(@PathVariable Long id) {
         service.inativar(id);
+    }
+
+    @PutMapping(value = "/{restauranteId}/produtos/{produtoId}/foto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void atualizarFoto(
+            @PathVariable Long restauranteId, @PathVariable Long produtoId, @RequestParam MultipartFile arquivo
+    ) {
+        var nomeArquivo = arquivo.getOriginalFilename();
+
+        var arquivoFoto = Path.of("C:\\Users\\Erick\\Desktop\\Casamento", nomeArquivo);
+
+        System.out.println(arquivoFoto);
+        System.out.println(arquivo.getContentType());
+
+        try {
+            arquivo.transferTo(arquivoFoto);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

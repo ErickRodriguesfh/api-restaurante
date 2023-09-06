@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class FormaPagamentoService {
                     formaPagamento.setDescricao(item.getDescricao());
                     return formaPagamento;
                 })
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Transactional

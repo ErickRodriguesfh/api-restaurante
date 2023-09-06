@@ -17,9 +17,9 @@ public class PedidoController {
 
     private final PedidoService service;
 
-    @GetMapping("/{idPedido}")
-    public PedidoDTO buscarPorId(@PathVariable Long idPedido) {
-        return service.buscarPorId(idPedido);
+    @GetMapping("/{codigo}")
+    public PedidoDTO buscarPorId(@PathVariable String codigo) {
+        return service.buscarPorId(codigo);
     }
 
     @GetMapping

@@ -20,8 +20,8 @@ public class PedidoService {
     private final PedidoRepository repository;
     private final ModelMapper mapper;
 
-    public PedidoDTO buscarPorId(Long idPedido) {
-        final var pedido = buscarOuFalhar(idPedido);
+    public PedidoDTO buscarPorId(String codigo) {
+        final var pedido = buscarOuFalhar(codigo);
         return pedidoToPedidoDto(pedido);
     }
 
@@ -48,9 +48,9 @@ public class PedidoService {
         return pedidoDto;
     }
 
-    public Pedido buscarOuFalhar(Long idPedido) {
-        return repository.findById(idPedido)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Pedido não encontrado com o id " +idPedido));
+    public Pedido buscarOuFalhar(String codigo) {
+        return repository.findByCodigo(codigo)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Pedido não encontrado com o código " +codigo));
     }
 
 }
